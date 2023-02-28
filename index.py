@@ -4,14 +4,16 @@ from datetime import datetime
 from core.file_manage import FileController
 from core.image_processing import ImageProcessingController
 from core.text_detection_rfid_card import TextDetector
-
+from core.video_processing import VideoProcessingController
 
 app = Flask(__name__)
 file_controller = FileController()
 image_processing_controller = ImageProcessingController()
 card=TextDetector()
+video_processing_controller=VideoProcessingController()
 
 print("IV-Master Api Running...")
+
 
 
 @app.route("/")
@@ -54,6 +56,16 @@ def TextDetection():
     path=r'.\storage\uploads\\'
     output=card.get_value_from_rfid(f"{path}{data['file_name']}")
     api_log_save("fileupload", "Called")
+    return output
+
+@app.route('/api/detectvideoobjects', methods=['POST'])
+def detectvideoobjects():
+    print(request.files)
+    responce = file_controller.upload_file(request)
+    data=responce.get_json()
+    path=r'.\storage\uploads\\'
+    output=video_processing_controller.DetectedObjects(f"{path}{data['file_name']}")
+    api_log_save("VideoObjectDetection", "Completed")
     return output
 
 def api_log_save(api_name, message):
