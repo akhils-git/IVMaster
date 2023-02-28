@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "29619624-99dd-44d4-86df-4a38bbe794f4",
+		"name": "R&D Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11504103"
+	},
+	"item": [
+		{
+			"name": "VMS",
+			"item": [
+				{
+					"name": "Calibration Api",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Akhil/Pictures/akhiraj_AT_Email_signature-1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.99.144.77:5000/api/getcalibration/500/1000/10000",
+							"protocol": "http",
+							"host": [
+								"192",
+								"99",
+								"144",
+								"77"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"getcalibration",
+								"500",
+								"1000",
+								"10000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Log",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Akhil/Pictures/akhiraj_AT_Email_signature-1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.99.144.77:5000/api/getlog",
+							"protocol": "http",
+							"host": [
+								"192",
+								"99",
+								"144",
+								"77"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"getlog"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Testing",
+			"item": [
+				{
+					"name": "File upload Api",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Akhil/Pictures/akhiraj_AT_Email_signature-1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/file-upload",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"file-upload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
