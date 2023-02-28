@@ -6,7 +6,7 @@ class FileController:
 
     def __init__(self):
         self.ALLOWED_EXTENSIONS = set(
-            ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'exe'])
+            ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'exe','mp4'])
     # body of the constructor
 
     def allowed_file(self, filename):

@@ -3,11 +3,13 @@ from flask import Flask, jsonify, request
 from datetime import datetime
 from core.file_manage import FileController
 from core.image_processing import ImageProcessingController
+from core.video_processing import VideoProcessingController
 
 
 app = Flask(__name__)
 file_controller = FileController()
 image_processing_controller = ImageProcessingController()
+video_processing_controller=VideoProcessingController()
 
 print("IV-Master Api Running...")
 
@@ -39,10 +41,20 @@ def detectimageobjects():
     api_log_save("fileupload", "Called")
     return responce
 
+@app.route('/api/detectvideoobjects', methods=['POST'])
+def detectvideoobjects():
+    print(request.files)
+    responce = file_controller.upload_file(request)
+    data=responce.get_json()
+    path=r'.\storage\uploads\\'
+    output=video_processing_controller.DetectedObjects(f"{path}{data['file_name']}")
+    #api_log_save("fileupload", "Called")
+    return output
+
 def api_log_save(api_name, message):
     logFile = open("./storage/log_file.txt", "a")  # append mode
     logFile.write(f"{api_name}|{message}|{str(datetime.now())}\n")
     logFile.close()
 
 
-app.run(host='0.0.0.0', port=5002)
+app.run(host='0.0.0.0', port=5000)
