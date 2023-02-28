@@ -35,7 +35,6 @@ class VideoProcessingController:
         
                    if c==frames-1:
                         break
-    
-            
+                   
 
             return finalOutput
