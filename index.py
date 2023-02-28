@@ -3,11 +3,13 @@ from flask import Flask, jsonify, request
 from datetime import datetime
 from core.file_manage import FileController
 from core.image_processing import ImageProcessingController
+from core.text_detection_rfid_card import TextDetector
 
 
 app = Flask(__name__)
 file_controller = FileController()
 image_processing_controller = ImageProcessingController()
+card=TextDetector()
 
 print("IV-Master Api Running...")
 
@@ -35,9 +37,24 @@ def upload_file():
 @app.route('/api/detectimageobjects', methods=['POST'])
 def detectimageobjects():
     print(request.files)
-    responce = image_processing_controller.object_detection(request)
+    responce = file_controller.upload_file(request)
+    data=responce.get_json()
+    path=r'.\storage\uploads\\'
+    output=image_processing_controller.object_detection(f"{path}{data['file_name']}")
+    #api_log_save("fileupload", "Called")
+    return output
+
+
+@app.route('/api/CardDetection', methods=['POST'])
+def TextDetection():
+    print(request.files)
+    responce = file_controller.upload_file(request)
+    data=responce.get_json()
+    
+    path=r'.\storage\uploads\\'
+    output=card.get_value_from_rfid(f"{path}{data['file_name']}")
     api_log_save("fileupload", "Called")
-    return responce
+    return output
 
 def api_log_save(api_name, message):
     logFile = open("./storage/log_file.txt", "a")  # append mode
@@ -45,4 +62,4 @@ def api_log_save(api_name, message):
     logFile.close()
 
 
-app.run(host='0.0.0.0', port=5002)
+app.run(host='0.0.0.0', port=5000)
