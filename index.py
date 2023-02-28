@@ -74,4 +74,4 @@ def api_log_save(api_name, message):
     logFile.close()
 
 
-app.run(host='0.0.0.0', port=5000)
+app.run(host='0.0.0.0', port=5002)
