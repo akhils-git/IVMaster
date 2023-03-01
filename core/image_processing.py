@@ -2,7 +2,6 @@
 import numpy as np
 import pandas as pd
 import torch
-from matplotlib import pyplot as plt
 from torchvision import transforms
 from PIL import Image
 
