@@ -5,12 +5,16 @@ from core.file_manage import FileController
 from core.image_processing import ImageProcessingController
 from core.text_detection_rfid_card import TextDetector
 from core.video_processing import VideoProcessingController
+from core.face_compare import FaceComparer
+from core.face_detection import FaceDetector
 
 app = Flask(__name__)
 file_controller = FileController()
 image_processing_controller = ImageProcessingController()
 card=TextDetector()
 video_processing_controller=VideoProcessingController()
+fc = FaceComparer()
+fd = FaceDetector()
 
 print("IV-Master Api Running...")
 
@@ -67,6 +71,31 @@ def detectvideoobjects():
     output=video_processing_controller.DetectedObjects(f"{path}{data['file_name']}")
     api_log_save("VideoObjectDetection", "Completed")
     return output
+@app.route('/api/facecompare', methods=['POST'])
+def FaceCompare():
+    print(request.files)
+    responce = file_controller.upload_file(request)
+    data=responce.get_json()
+    a=[]
+    a.append(data['file_name'])
+    path1=r'.\storage\uploads\\'+a[0]
+    path2=r'.\storage\uploads\\'+a[1]
+    #path1 = r".\storage\uploads\Dhoni.jpg"
+    #path=r'.\storage\uploads\\'
+
+    output=fc.compare_faces(path1,path2)
+    api_log_save("fileupload", "Called")
+    return output
+@app.route('/api/FaceDetection', methods=['POST'])
+def FaceDetection():
+    print(request.files)
+    responce = file_controller.upload_file(request)
+    data=responce.get_json()
+    
+    path=r'.\storage\uploads\\'
+    output=fd.detect_faces(f"{path}{data['file_name']}")
+    api_log_save("fileupload", "Called")
+    return output
 
 def api_log_save(api_name, message):
     logFile = open("./storage/log_file.txt", "a")  # append mode
@@ -74,4 +103,4 @@ def api_log_save(api_name, message):
     logFile.close()
 
 
-app.run(host='0.0.0.0', port=5002)
+app.run(host='0.0.0.0', port=5000)
