@@ -45,30 +45,25 @@ class FileController:
         responce_collection = []
         for file in all_files:
             if file.filename == '':
-                resp = jsonify(
+                responce_collection = jsonify(
                     {'message': 'No file selected for uploading'})
-                resp.status_code = 400
-                return resp
+                return responce_collection
         for file in all_files:
             if file and self.allowed_file(file.filename):
                 print("File name", file.filename)
                 upload_basepath = './storage/uploads/'+file.filename
                 file.save(upload_basepath)
                 file_size = os.stat(upload_basepath)
-                # resp = jsonify(
-                #     {'message': 'File successfully uploaded', 'size': file_size.st_size/1024, "file_name": file.filename})
-                # resp.status_code = 201
+
                 responce_collection.append(
                     {'message': 'File successfully uploaded', 'size': file_size.st_size/1024, "file_name": file.filename})
-                # return resp
+ 
             else:
-                resp = jsonify(
+                responce_collection = jsonify(
                     {'message': self.ALLOWED_EXTENSIONS})
-                resp.status_code = 400
-                return resp
-        resp.status_code = 201
-        resp = jsonify(responce_collection)
-        return resp
+                return responce_collection
+       
+        return  jsonify(responce_collection)
 
     def list_files(self):
         staticPath = "./storage/uploads/"

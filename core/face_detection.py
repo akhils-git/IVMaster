@@ -25,4 +25,4 @@ class FaceDetector:
              data=base64.b64encode(f.read())
         os.remove(path)
         
-        return data
+        return {"image_data":str(data),'details':a}
